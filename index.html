@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SEEDSONG — Procedural Music Generator</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<header class="app-header">
+  <div class="logo">SEEDSONG</div>
+  <div class="tagline"><span class="dot" id="liveDot"></span>procedural composer · deterministic seeds · runs entirely in your browser</div>
+</header>
+
+<div class="layout">
+  <aside class="panel">
+    <h3>Seed</h3>
+    <div class="field">
+      <div class="seed-row">
+        <input type="text" id="seedInput" placeholder="type anything…" value="orbital-42" />
+        <button id="randomSeedBtn" title="Random seed">🎲</button>
+      </div>
+    </div>
+
+    <h3>Composition</h3>
+    <div class="field">
+      <label for="lengthSelect">Length</label>
+      <select id="lengthSelect">
+        <option value="short">Short (Intro–A–A'–Outro)</option>
+        <option value="medium" selected>Medium (Intro–A–B–A'–Outro)</option>
+        <option value="long">Long (extended development)</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="moodSelect">Mood</label>
+      <select id="moodSelect">
+        <option value="bright">Bright</option>
+        <option value="melancholy">Melancholy</option>
+        <option value="dreamy" selected>Dreamy</option>
+        <option value="driving">Driving</option>
+        <option value="mysterious">Mysterious</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="tempoMode">Tempo</label>
+      <select id="tempoMode">
+        <option value="auto" selected>Auto (from mood + seed)</option>
+        <option value="manual">Manual</option>
+      </select>
+    </div>
+    <div class="field" id="tempoManualField" style="display:none;">
+      <div class="slider-row">
+        <input type="range" id="tempoSlider" min="50" max="170" value="96" />
+        <span class="slider-val" id="tempoVal">96 BPM</span>
+      </div>
+    </div>
+    <div class="field">
+      <label for="densitySelect">Density</label>
+      <select id="densitySelect">
+        <option value="sparse">Sparse</option>
+        <option value="balanced" selected>Balanced</option>
+        <option value="dense">Dense</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Humanization</label>
+      <div class="slider-row">
+        <input type="range" id="humanizeSlider" min="0" max="100" value="35" />
+        <span class="slider-val" id="humanizeVal">35%</span>
+      </div>
+    </div>
+    <div class="field">
+      <label>Master volume</label>
+      <div class="slider-row">
+        <input type="range" id="volumeSlider" min="0" max="100" value="80" />
+        <span class="slider-val" id="volumeVal">80%</span>
+      </div>
+    </div>
+
+    <button class="primary" id="generateBtn">▶ Generate</button>
+
+    <h3>Regenerate part</h3>
+    <div class="btn-row">
+      <button id="newMelodyBtn">New melody</button>
+      <button id="newHarmonyBtn">New harmony</button>
+      <button id="newBeatBtn">New beat</button>
+    </div>
+
+    <h3>Playback</h3>
+    <div class="transport">
+      <button id="playBtn">▶ Play</button>
+      <button id="stopBtn">■ Stop</button>
+    </div>
+
+    <h3>Export</h3>
+    <div class="export-row">
+      <button id="exportMidiBtn">⬇ Download MIDI</button>
+      <button id="exportWavBtn">⬇ Download WAV</button>
+      <button id="exportMp3Btn">⬇ Download MP3</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <section class="info-grid">
+      <div class="info-card"><div class="k">Key</div><div class="v" id="infoKey">—</div></div>
+      <div class="info-card"><div class="k">Scale</div><div class="v" id="infoScale">—</div></div>
+      <div class="info-card"><div class="k">Tempo</div><div class="v" id="infoTempo">—</div></div>
+      <div class="info-card"><div class="k">Notes</div><div class="v" id="infoNotes">—</div></div>
+      <div class="info-card"><div class="k">Seed</div><div class="v" id="infoSeed">—</div></div>
+    </section>
+
+    <section class="viz-card">
+      <div class="label">Visualizer</div>
+      <canvas id="mainViz"></canvas>
+    </section>
+
+    <section class="viz-card">
+      <div class="label">Timeline / Piano Roll</div>
+      <div class="roll-wrap">
+        <canvas id="rollNotes"></canvas>
+        <canvas id="rollPlayhead"></canvas>
+      </div>
+      <div class="legend" id="legend"></div>
+    </section>
+
+    <section class="log-card" id="logCard">
+      <div class="line hl">SEEDSONG ready. Enter a seed and click Generate.</div>
+    </section>
+
+    <div class="footer-note">All synthesis, rendering and export happen locally in your browser — no server, no network required.</div>
+  </main>
+</div>
+
+<script src="lib/lame.min.js"></script>
+<script src="js/prng.js"></script>
+<script src="js/theory.js"></script>
+<script src="js/composer.js"></script>
+<script src="js/synth.js"></script>
+<script src="js/scheduler.js"></script>
+<script src="js/visualizer.js"></script>
+<script src="js/midiExport.js"></script>
+<script src="js/wavExport.js"></script>
+<script src="js/mp3Export.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
